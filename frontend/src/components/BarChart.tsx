@@ -37,7 +37,7 @@ const BarChart: React.FC<{
     goals: [
       {
         name: 'Requirement',
-        value: requirements[index],
+       value: requirements[index] ?? 0,
         strokeWidth: 5,
         strokeColor: redColor,
         strokeHeight: 15,
@@ -71,7 +71,7 @@ const BarChart: React.FC<{
           },
           dataLabels: {
             formatter: (val: number, opts) => {
-              const goal = opts.w.config.series[opts.seriesIndex].data[opts.dataPointIndex].goals[0]
+              const goal =  opts.w.config.series?.[opts.seriesIndex]?.data?.[opts.dataPointIndex]?.goals?.[0]
               if (goal) {
                 return `${val} / ${goal.value}`
               }
@@ -80,7 +80,7 @@ const BarChart: React.FC<{
           },
           colors: [
             function ({ value, dataPointIndex, _ }) {
-              const requirement = requirements[dataPointIndex]
+              const requirement = requirements[dataPointIndex] ?? 0
               if (reverseColors?.[dataPointIndex]) {
                 if (value < requirement * 0.75) {
                   return orangeColor
